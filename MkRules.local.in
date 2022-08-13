@@ -7,15 +7,20 @@ WIN = 64
 # DEBUG = 1
 
 ## Add custom compile flags here
-# EOPTS = -mtune=generic
+# EOPTS = -mtune=generic -pipe # To use the same installer on different computers
+EOPTS = -O2 -march=native -pipe
+# LTO = -flto -ffat-lto-objects -fuse-linker-plugin
+# LTO_OPT = -flto -ffat-lto-objects -fuse-linker-plugin
+# LTO_FC_OPT = -flto -ffat-lto-objects -fuse-linker-plugin
 
 # Enable features
 USE_ICU = YES
 USE_LIBCURL = YES
 BUILD_HTML = YES
-USE_ATLAS = NO
+USE_ATLAS = YES
 MIKTEX = TRUE
 OPENMP = -fopenmp
+ATLAS_PATH="/ucrt64/lib/"
 
 ## Curl / ICU flags
 CURL_LIBS = -lcurl -lssh2 -lz -lssl -lcrypto -lgdi32 -lws2_32 -lcrypt32 -lwldap32
@@ -27,7 +32,7 @@ CAIRO_LIBS = "-lcairo -lfreetype -lpng -lpixman-1 -lz -liconv -lgdi32 -lmsimg32"
 CAIRO_CPPFLAGS = -I/ucrt64/include/cairo
 
 ## For building docs/installer
-ISDIR = C:/Program Files (x86)/Inno Setup 6
+ISDIR = ~/scoop/apps/innounp/current
 MAKEINFO = texi2any
 TEXI2ANY = texi2any
 

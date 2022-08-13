@@ -3,8 +3,11 @@
 set -e
 set -x
 
+# build the complete installer
+export build_installer=1
+
 # What version to build from; default is r-devel
-version=${version:-"devel"}
+version=${version:-"4.2.1"}
 case $version in
   devel)
     rsource_url="https://cran.r-project.org/src/base-prerelease/R-devel.tar.gz" ;;
@@ -15,8 +18,8 @@ case $version in
 esac
 
 # Put pdflatex on the path (needed only for CMD check)
-export PATH="$PATH:$HOME/AppData/Local/Programs/MiKTeX/miktex/bin/x64:/c/progra~1/MiKTeX/miktex/bin/x64:/c/progra~1/MiKTeX 2.9/miktex/bin/x64"
-export PATH="/ucrt64/bin:$PATH"
+# export PATH="$PATH:~/scoop/apps/miktex/current/texmfs/install/miktex/bin/x64"
+export PATH="/ucrt64/bin:/x86_64-w64-mingw32.static.posix/bin:/usr/bin:$PATH"
 pdflatex --version || true
 texindex --version
 make --version
@@ -27,6 +30,7 @@ srcdir=$(dirname $(realpath $0))
 # Install system libs
 pacman -Syu --noconfirm
 pacman -S --needed --noconfirm mingw-w64-ucrt-x86_64-{gcc,gcc-fortran,icu,libtiff,libjpeg,libpng,pcre2,xz,bzip2,zlib,cairo,tk,curl,libwebp}
+pacman -S --needed --noconfirm mingw-w64-ucrt-x86_64-openblas
 
 # Download sources and extract (note tarball contains symlinks)
 rm -rf ${srcdir}/R-source
@@ -45,6 +49,8 @@ ${srcdir}/create-tcltk-bundle-ucrt.sh
 
 # Add custom patches here:
 # patch -Np1 -i "${srcdir}/myfix.patch" 
+patch -Np1 -i "${srcdir}/shortcut.diff"
+patch -Np1 -i "${srcdir}/blas.diff"
 
 # Build just the core pieces (no manuals or installer)
 cd "src/gnuwin32"

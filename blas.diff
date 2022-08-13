@@ -1,0 +1,11 @@
+--- a/src/extra/blas/Makefile.win
++++ b/src/extra/blas/Makefile.win
+@@ -12,7 +12,7 @@
+ ../../../$(BINDIR)/Rblas.dll: blas00.o ../../gnuwin32/dllversion.o
+ 	@$(ECHO) -------- Building $@ --------
+ 	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def \
+-	   -L../../../$(IMPDIR) -lR  -L"$(ATLAS_PATH)" -lf77blas -latlas
++	   -L../../../$(IMPDIR) -lR  -L"$(ATLAS_PATH)" -fopenmp -lopenblas
+ else
+ ../../../$(BINDIR)/Rblas.dll: blas.o cmplxblas.o ../../gnuwin32/dllversion.o
+ 	@$(ECHO) -------- Building $@ --------
