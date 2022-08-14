@@ -71,7 +71,8 @@ make distribution 2>&1 | tee ${srcdir}/build.log
 # Copy to home dir
 cd $srcdir
 cp -v R-source/src/gnuwin32/installer/*.exe .
-# mv R-$version R-$version-openblas
+# You should comment next line if you don't want to use scoop to manage program
+cp R-$version-win.exe $HOME/scoop/local_pkgs/R-$version-openblas.exe
 installer=$(ls *.exe)
 echo "::set-output name=installer::$installer"
 echo "Done: $installer"
