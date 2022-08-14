@@ -7,7 +7,7 @@ This repository was used to build dailies and official releases for R 4.0.0 - 4.
 ## Warning 
 Don't rely on the release file of current branch, since I build R installers for each machine I used. If you want to build R 4.2 for Windows with OpenBLAS and specific machine architectures, you need to be careful. To use the same installer on different computers Avraham Adler recommend `-mtune=generic -pipe`.
 
-To use this repository, you should firstly clone it or download it as zip file and then adjust some file path. Since I used `scoop` to manage may software, the path I set is based on the software downloaded from `scoop`. You should ajdust these to yours, including `miktex` file path in `build.sh` (`export PATH` in 21 line, strangely, by setting this I cannot make my `miktex` work so I choose to set environment variable in `msys2` manually) file and `Inno Setup` file path in `MkRules.local.in` (`ISDIR` in the 35 line) file
+To use this repository, you should firstly clone it or download it as zip file and then adjust some file path. Since I used `scoop` to manage may software, the path I set is based on the software downloaded from `scoop`. You should ajdust these to yours, including `miktex` file path in `build.sh` (`export PATH` in 21 line) file and `Inno Setup` file path in `MkRules.local.in` (`ISDIR` in the 35 line) file
 
 This branch was based on the two detailed posts of Avraham Adler
  - https://www.avrahamadler.com/2020/05/12/building-r-4-for-windows-with-openblas/

@@ -3,7 +3,7 @@
 set -e
 set -x
 
-# build the complete installer
+# build the complete installer, comment next line if you want a quick build
 export build_installer=1
 
 # What version to build from; default is r-devel
@@ -18,8 +18,8 @@ case $version in
 esac
 
 # Put pdflatex on the path (needed only for CMD check)
-# export PATH="$PATH:~/scoop/apps/miktex/current/texmfs/install/miktex/bin/x64"
-export PATH="/ucrt64/bin:/x86_64-w64-mingw32.static.posix/bin:/usr/bin:$PATH"
+export PATH="$HOME/scoop/apps/miktex/current/texmfs/install/miktex/bin/x64:$PATH"
+export PATH="/ucrt64/bin:/x86_64-w64-mingw32.static.posix/bin:$PATH"
 pdflatex --version || true
 texindex --version
 make --version
@@ -49,8 +49,8 @@ ${srcdir}/create-tcltk-bundle-ucrt.sh
 
 # Add custom patches here:
 # patch -Np1 -i "${srcdir}/myfix.patch" 
-patch -Np1 -i "${srcdir}/shortcut.diff"
 patch -Np1 -i "${srcdir}/blas.diff"
+patch -Np1 -i "${srcdir}/ISDIR.diff"
 
 # Build just the core pieces (no manuals or installer)
 cd "src/gnuwin32"
@@ -71,6 +71,7 @@ make distribution 2>&1 | tee ${srcdir}/build.log
 # Copy to home dir
 cd $srcdir
 cp -v R-source/src/gnuwin32/installer/*.exe .
+# mv R-$version R-$version-openblas
 installer=$(ls *.exe)
 echo "::set-output name=installer::$installer"
 echo "Done: $installer"

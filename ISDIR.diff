@@ -1,0 +1,17 @@
+--- a/src/gnuwin32/installer/Makefile
++++ b/src/gnuwin32/installer/Makefile
+@@ -178,7 +178,7 @@
+ 	  $(HelpStyle) $(Producer) "$(ISDIR)"
+ 
+ $(RPREFIX)-win.exe: R.iss
+-	"$(ISDIR)/iscc" R.iss > $(RPREFIX).log 2>&1
++	"$(ISDIR)/iscc.exe" R.iss > $(RPREFIX).log 2>&1
+ 
+ 
+ ## for MSI installer
+@@ -219,4 +219,4 @@
+ 	../../../bin$(R_ARCH)/Rscript JRins.R \
+ 	  $(RPREFIX) "$(IMAGEDIR)" $(MDISDI) \
+ 	  $(HelpStyle) $(Producer) "$(ISDIR)"
+-	"$(ISDIR)/iscc" R.iss > myR.log
++	"$(ISDIR)/iscc.exe" R.iss > myR.log
