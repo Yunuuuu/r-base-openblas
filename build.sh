@@ -19,7 +19,10 @@ esac
 
 # Put pdflatex on the path (needed only for CMD check)
 export PATH="$HOME/scoop/apps/miktex/current/texmfs/install/miktex/bin/x64:$PATH"
-export PATH="/ucrt64/bin:/x86_64-w64-mingw32.static.posix/bin:$PATH"
+export PATH="/ucrt64/bin:$PATH"
+# export PATH="/x86_64-w64-mingw32.static.posix/bin:/usr/bin:$PATH"
+# export TAR="/usr/bin/tar"
+# export TAR_OPTIONS="--force-local"
 pdflatex --version || true
 texindex --version
 make --version
@@ -66,12 +69,13 @@ fi
 # full build
 set -o pipefail
 make distribution 2>&1 | tee ${srcdir}/build.log
-#make check-all 2>&1 | tee ${srcdir}/check.log
+# make check-all 2>&1 | tee ${srcdir}/check.log
+make check-recommended 2>&1 | tee ${srcdir}/check.log
 
 # Copy to home dir
 cd $srcdir
 cp -v R-source/src/gnuwin32/installer/*.exe .
-# You should comment next line if you don't want to use scoop to manage program
+# Since I use scoop to install program, You should comment next line
 cp R-$version-win.exe $HOME/scoop/local_pkgs/R-$version-openblas.exe
 installer=$(ls *.exe)
 echo "::set-output name=installer::$installer"
